@@ -96,3 +96,6 @@ Para entregar, publique as alterações no repositório GitHub e envie o link po
 - [Instalação e execução do StrykerJS](https://stryker-mutator.io/docs/stryker-js/getting-started/)
 - [Integração oficial com Jest](https://stryker-mutator.io/docs/stryker-js/jest-runner/)
 - [Opções de configuração](https://stryker-mutator.io/docs/stryker-js/configuration/)
+
+
+### Adicionando uma linha ao commit para os actions acionarem automaticamente
