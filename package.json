@@ -1,0 +1,36 @@
+{
+  "name": "prova01-automacaoetestes",
+  "version": "1.0.0",
+  "description": "Testes unitários e de mutação da classe Cartao com Jest e StrykerJS",
+  "main": "index.js",
+  "keywords": [],
+  "type": "commonjs",
+  "devDependencies": {
+    "@stryker-mutator/core": "10.0.0",
+    "@stryker-mutator/jest-runner": "10.0.0",
+    "jest": "^30.5.0"
+  },
+  "dependencies": {
+    "mkdirp": "^3.0.1",
+    "rimraf": "^6.1.3"
+  },
+  "scripts": {
+    "clean": "rimraf ./coverage && mkdirp ./coverage",
+    "test": "npm run clean && jest",
+    "coverage": "npm run clean && jest --coverage",
+    "test:mutation": "stryker run",
+    "test:all": "npm run coverage && npm run test:mutation"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "coverageReporters": [
+      "lcov",
+      "text"
+    ]
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

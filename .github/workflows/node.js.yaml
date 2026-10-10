@@ -1,0 +1,45 @@
+name: Build and Tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron: '0 12 * * *'
+
+jobs:
+  build:
+    name: Run Unit and Mutation Tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7.0.0
+    - name: Use Node.js 22
+      uses: actions/setup-node@v7.0.0
+      with:
+        node-version: 22
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run coverage
+    - run: npm run test:mutation
+    - name: Save mutation reports
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: stryker-mutation-report
+        path: reports/mutation/
+        if-no-files-found: warn
+
+  sonarcloud:
+    name: Run SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.0
+        with:
+          fetch-depth: 0
+      - name: Official SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v8.2.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
